@@ -1,11 +1,11 @@
+import Layout from "../../Components/Layout"
+
 function MyOrders() {
     return (
-      <>
-        <div className='bg-red-100'>
-          My orders
-        </div>
-      </>
-    )
+      <Layout>
+        My orders
+      </Layout>
+  )
   }
   
   export default MyOrders
