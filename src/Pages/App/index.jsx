@@ -1,4 +1,5 @@
 import {useRoutes, BrowserRouter} from 'react-router-dom';
+import { ShoppingProvider } from '../../Context';
 import Home from '../Home';
 import MyAccount from '../MyAccount';
 import MyOrder from '../MyOrder';
@@ -8,6 +9,7 @@ import SignIn from '../SignIn'
 import Navbar from '../../Components/Navbar';
 
 import './App.css';
+import CheckoutSideMenu from '../../Components/CkeckoutSideMenu';
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -21,13 +23,15 @@ const AppRoutes = () => {
   return routes;
 }
 
-const App = () => {
-  
+const App = () => {  
   return (
-    <BrowserRouter>
-      <Navbar></Navbar>
-      <AppRoutes></AppRoutes>      
-    </BrowserRouter>
+    <ShoppingProvider>
+      <BrowserRouter>
+        <AppRoutes></AppRoutes>      
+        <Navbar></Navbar>
+        <CheckoutSideMenu></CheckoutSideMenu>
+      </BrowserRouter>
+    </ShoppingProvider>
   )
 }
 
