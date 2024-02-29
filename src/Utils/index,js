@@ -5,5 +5,20 @@
  */
 export const totalPrice = (products) => {
     if (!products.length) return;
-    return products.reduce((acc, curr) => acc + curr.price, 0)
+    return  products.reduce((acc, curr) => Number.parseFloat(Number.parseFloat(acc) + Number.parseFloat(curr.price)).toFixed(2), 0);
+}
+
+export const createRandomString = (length) => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    const randomArray = new Uint8Array(length);
+    crypto.getRandomValues(randomArray);
+    randomArray.forEach((number) => {
+      result += chars[number % chars.length];
+    });
+    return result;
+}
+
+export const createRandomNumber = (min = 1, max = 10) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
