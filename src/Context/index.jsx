@@ -20,22 +20,55 @@ export const ShoppingProvider =  ({ children }) => {
     const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
     const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
+    // Get categories
+    const [categories, setCategories] = useState([]);
+
+
     // Get products
-    const [items, setItems] = useState(null);
+    const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
+    
+    // Filter products
+    const [searchTerm, setSearchTerm] = useState(null);
+    const [category, setCategory] = useState(null);
+
+    const filterItems = (items, searchTerm, filterField='all') => {        
+        const term = searchTerm?.toLowerCase().trim() || "";
+        return filterField === 'all' 
+            ? items.filter(item  => item.title.toLowerCase().includes(term) || item.category.toLowerCase().includes(term) || item.description.toLowerCase().includes(term))
+            :  filterField === 'category' ? items.filter(item  => item.category.toLowerCase() === term) : items.filter(item  => item[filterField].toLowerCase().includes(term));  
+    }
 
     useEffect(() => {
-        // fetch('https://api.escuelajs.co/api/v1/products')
-        const fetchData = async () => {
-        try {
-            const response = await fetch('https://fakestoreapi.com/products')
-            const data = await response.json()
-            setItems(data)
-        } catch (error) {
-            console.error(`Oh no, ocurrió un error: ${error}`);
+        const getApiData = async (url, setStateFunction) => {
+            try {
+                const response = await fetch(url)
+                const data = await response.json()
+                setStateFunction(data)
+            } catch (error) {
+                console.error(`Oh!! An error occurred while retrieving data: ${error}`);
+            }
         }
-        }
-        fetchData()
+        getApiData('https://fakestoreapi.com/products', setItems);
+        getApiData('https://fakestoreapi.com/products/categories', setCategories);
     }, []);
+
+    useEffect(() => {
+        setFilteredItems(items)
+        if (searchTerm && category) {
+            const categoryItems = filterItems(items, category, 'category');
+            setFilteredItems(filterItems(categoryItems, searchTerm, 'title'));
+        } else {
+            if (searchTerm)
+                setFilteredItems(filterItems(items, searchTerm));
+            if (category)
+                setFilteredItems(filterItems(items, category, 'category'));
+        }
+        return () => {
+            setFilteredItems(items)
+        }
+    }, [items, searchTerm, category]);
+
 
     return (
         <ShoppingContext.Provider
@@ -43,7 +76,8 @@ export const ShoppingProvider =  ({ children }) => {
                 count, setCount, openProductDetail, closeProductDetail, isProductDetailOpen,
                 selectedProduct, setSelectedProduct, cartProducts, setCartProducts,
                 isCheckoutSideMenuOpen, openCheckoutSideMenu, closeCheckoutSideMenu,
-                order, setOrder, items, setItems
+                order, setOrder, items, setItems, searchTerm, setSearchTerm, filteredItems,
+                categories, category, setCategory
             }}
         >
             {children}
