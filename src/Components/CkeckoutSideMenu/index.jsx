@@ -69,7 +69,18 @@ const CheckoutSideMenu = () => {
                         <span className='font-light'>Total</span>
                         <span className=' font-medium text-2xl'>{totalPrice(context.cartProducts) || 0}€</span>
                     </p>
-                    {!context.user?.id && <p className=" text-sm text-blue-950 text-center mt-5">You must be logged in to check out</p>}
+                    {!context.user?.id && 
+                        <> 
+                            <p className=" text-sm text-blue-950 text-center mt-5">
+                                You must be logged in to check out.
+                            </p>
+                            <p className=" text-sm text-blue-950 text-center mt-5">
+                                <Link to='/signin'>
+                                    <span className="cursor-pointer underline underline-offset-4"> Sign in</span>
+                                </Link>
+                            </p>
+                        </>
+                    }
                     <Link to="/orders/last">
                         <button className="w-full bg-black py-3 mt-2 mb-6 text-white rounded-lg disabled:bg-gray-700"
                             onClick={() => handleCheckout()}
