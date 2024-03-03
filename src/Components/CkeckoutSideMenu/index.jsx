@@ -40,8 +40,7 @@ const CheckoutSideMenu = () => {
     
 
     return (
-        <>
-            <div className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} navbar-backdrop fixed inset-0 bg-gray-800 opacity-25`}></div>
+        <>         
             <aside className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} ckeckout-side-menu flex-col fixed right-0 border border-black rounded-lg bg-white`}>
                 <div className="flex justify-between items-center p-6">
                     <h2 className=" font-medium text-xl">My Order</h2>

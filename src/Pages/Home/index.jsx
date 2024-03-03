@@ -4,6 +4,7 @@ import { ShoppingContext } from "../../Context";
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import ProductDetail from "../../Components/ProductDetail";
+import { NoResultIcon } from "../../Components/Icons/NoResultsIcon";
 
 function Home() {
   const context = useContext(ShoppingContext);
@@ -32,7 +33,10 @@ function Home() {
         </div>
         {
           (context.searchTerm && !context.filteredItems.lenght) &&
-          <div>No results found 😢😢</div>
+          <div className="flex justify-between gap-4 content-center items-center">
+            <span>Not results found </span>
+            <NoResultIcon />
+          </div>
         }
         <ProductDetail></ProductDetail>
       </Layout>
