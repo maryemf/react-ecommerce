@@ -1,6 +1,12 @@
 .ckeckout-side-menu {
     width: 360px;
-    height: calc(100vh - 68px);
-    top: 68px;
+    height: calc(100vh - 72px);
+    top: 72px;
+
+    @media (max-width: 769px) {
+        height: calc(100vh - 80px);
+        top: 80px;
+    }
+      
     
 }

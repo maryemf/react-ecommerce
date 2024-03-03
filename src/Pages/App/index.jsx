@@ -10,9 +10,10 @@ import Navbar from '../../Components/Navbar';
 
 import './App.css';
 import CheckoutSideMenu from '../../Components/CkeckoutSideMenu';
+import Register from '../Register';
 
 const AppRoutes = () => {
-  let routes = useRoutes([
+  let routes = useRoutes([    
     {path: '/', element: <Home />},
     {path: '/:category', element: <Home />},    
     {path: '/account', element: <MyAccount />},
@@ -21,6 +22,7 @@ const AppRoutes = () => {
     {path: '/orders', element: <MyOrders />},    
     {path: '/orders/last', element: <MyOrder />},    
     {path: '/signin', element: <SignIn />},
+    {path: '/register', element: <Register />},
     {path: '/*', element: <NotFound />},
   ])
   return routes;

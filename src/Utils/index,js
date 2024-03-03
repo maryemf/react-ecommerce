@@ -1,3 +1,9 @@
+export const storageKeys = {
+    users: 'shoppingCart_V1_users',
+    loggedUser: 'shoppingCart_V1_user',
+    cart: 'shoppingCart_V1_cart'
+}
+
 /**
  * This function calculate total price of  all products in the cart. It takes an array of objects as input, where each object represents a product element
  * @param {Array} products cartProducts: Array of objects
@@ -5,7 +11,7 @@
  */
 export const totalPrice = (products) => {
     if (!products.length) return;
-    return  products.reduce((acc, curr) => Number.parseFloat(Number.parseFloat(acc) + Number.parseFloat(curr.price)).toFixed(2), 0);
+    return  products.reduce((acc, curr) => (Number.parseFloat(acc) + Number.parseFloat(curr.price)).toFixed(2), 0);
 }
 
 export const createRandomString = (length) => {
@@ -22,3 +28,10 @@ export const createRandomString = (length) => {
 export const createRandomNumber = (min = 1, max = 10) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export const validEmail = (email) => {
+    const emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
+    return emailRegex.test(email);
+}
+
+

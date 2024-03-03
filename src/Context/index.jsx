@@ -1,8 +1,14 @@
 import { createContext, useEffect, useState } from "react";
+import { storageKeys } from "../Utils/index,js";
+import useLocalStorage from "../Hooks/useLocalStorage";
+import useLocalUsers from "../Hooks/useLocalUsers";
 
 export const ShoppingContext = createContext();
 
-export const ShoppingProvider =  ({ children }) => {    
+export const ShoppingProvider =  ({ children }) => { 
+    // user
+    const {user, setUser} = useLocalUsers();
+
     // Product Detail - Open/Close
     const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);    
     const openProductDetail = () => setIsProductDetailOpen(true);
@@ -12,8 +18,11 @@ export const ShoppingProvider =  ({ children }) => {
     // Shopping cart - Increment quantity
     const [count, setCount] = useState(0);
     // Shopping cart - Add
-    const [cartProducts, setCartProducts] = useState([]);
+    const {item:cartProducts, saveItem:setCartProducts} = useLocalStorage(storageKeys.cart, []);
+    // const [cartProducts, setCartProducts] = useState([]);
     const [order, setOrder] = useState([]);
+    // const {getUserOrders:order, addOrderToUser:setOrder} = useState([]);
+
 
     // Checkout side menu - Open/Close
     const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);    
@@ -69,6 +78,11 @@ export const ShoppingProvider =  ({ children }) => {
         }
     }, [items, searchTerm, category]);
 
+    useEffect(() => {
+        if (user.id){
+            setOrder(user.orders || []);
+        }
+    }, [user]);
 
     return (
         <ShoppingContext.Provider
@@ -76,8 +90,9 @@ export const ShoppingProvider =  ({ children }) => {
                 count, setCount, openProductDetail, closeProductDetail, isProductDetailOpen,
                 selectedProduct, setSelectedProduct, cartProducts, setCartProducts,
                 isCheckoutSideMenuOpen, openCheckoutSideMenu, closeCheckoutSideMenu,
-                order, setOrder, items, setItems, searchTerm, setSearchTerm, filteredItems,
-                categories, category, setCategory
+                items, setItems, searchTerm, setSearchTerm, filteredItems,
+                categories, category, setCategory, user, setUser, order,
+                setOrder
             }}
         >
             {children}

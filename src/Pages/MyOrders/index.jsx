@@ -12,7 +12,7 @@ function MyOrders() {
         </div>
         <div className="w-3/5">
           {
-            context.order.map((order, index) => (
+            (context.user.orders || []).map((order, index) => (
               <Link key={index} to={`/order/${order.id}`}>
                 <OrdersCart order={order}
                 />
