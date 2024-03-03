@@ -31,7 +31,7 @@ const AppRoutes = () => {
 const App = () => { 
   return (
     <ShoppingProvider>
-      <BrowserRouter basename={import.meta.env.DEV ? '/' : '/react-ecommerce/'}>
+      <BrowserRouter>
         <AppRoutes></AppRoutes>      
         <Navbar></Navbar>
         <CheckoutSideMenu></CheckoutSideMenu>
